@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompagnIA - Votre Compagnon IA Personnel pour Seniors</title>
+    <meta name="description" content="Un service IA bienveillant qui appelle quotidiennement vos proches seniors, gère leurs rendez-vous et vous tient informé de leur bien-être.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #7fb069;
+            --accent-color: #f4a261;
+            --warm-gray: #f8f6f3;
+            --soft-blue: #e8f4fd;
+            --text-dark: #2c3e50;
+            --text-gray: #5a6c7d;
+            --border-light: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--warm-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .cta-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .cta-header:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--soft-blue) 0%, white 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a90e2' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            opacity: 0.4;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .hero .subtitle {
+            font-size: 24px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat .number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat .label {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-top: 8px;
+        }
+
+        .hero-cta {
+            margin-top: 50px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(74, 144, 226, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            padding: 18px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s;
+            border: 2px solid var(--primary-color);
+            margin-left: 20px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: var(--text-gray);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .problem-card {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .problem-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .problem-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 15px;
+        }
+
+        .problem-desc {
+            color: #7f1d1d;
+            line-height: 1.6;
+        }
+
+        /* Solution Section */
+        .solution {
+            padding: 80px 0;
+            background: var(--soft-blue);
+        }
+
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .solution-text h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .solution-text p {
+            font-size: 20px;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .solution-features {
+            list-style: none;
+        }
+
+        .solution-features li {
+            padding: 12px 0;
+            font-size: 18px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .solution-features li::before {
+            content: "✅";
+            font-size: 20px;
+        }
+
+        .solution-visual {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .phone-mockup {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 25px;
+            margin: 0 auto;
+            max-width: 280px;
+            position: relative;
+        }
+
+        .call-interface {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .caller-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .caller-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .caller-details h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .caller-details p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .call-status {
+            background: var(--secondary-color);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: var(--warm-gray);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 25px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feature-benefits {
+            list-style: none;
+            text-align: left;
+        }
+
+        .feature-benefits li {
+            padding: 8px 0;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .feature-benefits li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: var(--warm-gray);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .testimonial {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 30px;
+            font-size: 80px;
+            color: var(--primary-color);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .testimonial-content {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: var(--warm-gray);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .pricing-card.featured {
+            background: white;
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(74, 144, 226, 0.2);
+        }
+
+        .pricing-card.featured::before {
+            content: "Le plus populaire";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .plan-price {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .plan-price .currency {
+            font-size: 24px;
+            vertical-align: top;
+        }
+
+        .plan-price .period {
+            font-size: 18px;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-dark);
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .plan-cta {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .plan-cta.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .plan-cta.secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .plan-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 0;
+            background: var(--warm-gray);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            padding: 25px;
+            background: white;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--soft-blue);
+        }
+
+        .faq-question::after {
+            content: "+";
+            font-size: 24px;
+            color: var(--primary-color);
+            transition: transform 0.3s;
+        }
+
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .faq-answer.active {
+            padding: 0 25px 25px;
+            max-height: 200px;
+        }
+
+        /* CTA Final */
+        .final-cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            color: white;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            font-size: 22px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .final-cta .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .final-cta .btn-primary:hover {
+            background: var(--warm-gray);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 30px;
+            color: #94a3b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero .subtitle {
+                font-size: 18px;
+            }
+
+            .hero-stats {
+                gap: 30px;
+            }
+
+            .btn-secondary {
+                display: block;
+                margin: 20px auto 0;
+            }
+
+            .solution-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .features-grid,
+            .testimonials-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating elements */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">
+                <span>👴</span>
+                <span>CompagnIA</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <a href="#essai" class="cta-header">Essai gratuit</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Votre famille mérite la tranquillité d'esprit</h1>
+                <p class="subtitle">
+                    CompagnIA appelle quotidiennement vos proches seniors pour prendre de leurs nouvelles
+                    et vous tient informé de leur bien-être. Une présence bienveillante et rassurante.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="number">15M+</span>
+                        <div class="label">Seniors en France</div>
+                    </div>
+                    <div class="stat">
+                        <span class="number">92%</span>
+                        <div class="label">Vivent seuls</div>
+                    </div>
+                    <div class="stat">
+                        <span class="number">40%</span>
+                        <div class="label">Se sentent isolés</div>
+                    </div>
+                </div>
+
+                <div class="hero-cta">
+                    <a href="#essai" class="btn-primary">Commencer l'essai gratuit</a>
+                    <a href="#demo" class="btn-secondary">Voir la démo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title">Les défis du quotidien pour nos seniors</h2>
+            <p class="section-subtitle">
+                Vieillir chez soi est un souhait légitime, mais garder le contact peut être un défi...
+            </p>
+
+            <div class="problem-grid">
+                <div class="problem-card animate-on-scroll">
+                    <span class="problem-icon">😰</span>
+                    <h3 class="problem-title">Inquiétude permanente</h3>
+                    <p class="problem-desc">
+                        "Comment va maman aujourd'hui ? A-t-elle pris ses médicaments ? 
+                        Est-ce qu'elle mange correctement ?"
+                    </p>
+                </div>
+
+                <div class="problem-card animate-on-scroll">
+                    <span class="problem-icon">📞</span>
+                    <h3 class="problem-title">Manque de contact</h3>
+                    <p class="problem-desc">
+                        Les journées passent sans nouvelles, difficile de savoir si tout va bien
+                        sans être trop intrusif.
+                    </p>
+                </div>
+
+                <div class="problem-card animate-on-scroll">
+                    <span class="problem-icon">😔</span>
+                    <h3 class="problem-title">Isolement social</h3>
+                    <p class="problem-desc">
+                        Moins de contacts sociaux, perte de repères, 
+                        risque de dépression et de déclin cognitif.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <div class="solution-content">
+                <div class="solution-text animate-on-scroll">
+                    <h2>Une présence bienveillante, tous les jours</h2>
+                    <p>
+                        CompagnIA est bien plus qu'un simple service : c'est un compagnon numérique 
+                        qui veille sur vos proches avec la même attention qu'un membre de la famille.
+                    </p>
+                    
+                    <ul class="solution-features">
+                        <li>Appels quotidiens personnalisés</li>
+                        <li>Conversations bienveillantes et naturelles</li>
+                        <li>Détection des signes de détresse</li>
+                        <li>Alertes famille en cas de problème</li>
+                        <li>Stimulation cognitive douce</li>
+                        <li>Interface simple, aucune technologie complexe</li>
+                    </ul>
+
+                    <a href="#fonctionnalites" class="btn-primary">Découvrir les fonctionnalités</a>
+                </div>
+
+                <div class="solution-visual animate-on-scroll floating">
+                    <div class="phone-mockup">
+                        <div class="call-interface">
+                            <div class="caller-info">
+                                <div class="caller-avatar">🤖</div>
+                                <div class="caller-details">
+                                    <h4>CompagnIA</h4>
+                                    <p>Appel quotidien</p>
+                                </div>
+                            </div>
+                            <div class="call-status">
+                                "Bonjour Madame Dupont ! Comment allez-vous aujourd'hui ?"
+                            </div>
+                        </div>
+                        <div style="color: white; font-size: 14px; margin-top: 15px;">
+                            ✓ Conversation naturelle<br>
+                            ✓ Détection d'urgence<br>
+                            ✓ Rapport automatique
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="fonctionnalites" class="features">
+        <div class="container">
+            <h2 class="section-title">Des fonctionnalités pensées pour le bien-être</h2>
+            <p class="section-subtitle">
+                Chaque détail a été conçu pour rassurer les familles et accompagner les seniors
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">📞</div>
+                    <h3 class="feature-title">Appels Quotidiens</h3>
+                    <p class="feature-desc">
+                        Conversations naturelles et bienveillantes adaptées à chaque personnalité. 
+                        L'IA apprend les habitudes et préférences de votre proche.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li>Horaire personnalisé selon les habitudes</li>
+                        <li>Conversation adaptée à l'humeur du jour</li>
+                        <li>Détection automatique des signes d'alarme</li>
+                        <li>Durée flexible selon les besoins</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">Conversations Enrichissantes</h3>
+                    <p class="feature-desc">
+                        Échanges naturels et bienveillants qui s'adaptent aux centres d'intérêt 
+                        et à l'humeur de votre proche. L'IA apprend à le connaître.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li>Sujets adaptés aux passions de chacun</li>
+                        <li>Écoute active et empathique</li>
+                        <li>Partage de souvenirs et d'expériences</li>
+                        <li>Encouragement et soutien moral</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">👨‍👩‍👧‍👦</div>
+                    <h3 class="feature-title">Tranquillité Famille</h3>
+                    <p class="feature-desc">
+                        Rapports quotidiens automatiques, alertes intelligentes et tableau 
+                        de bord famille pour rester connecté sans être intrusif.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li>Rapport quotidien par SMS/email</li>
+                        <li>Alertes urgence immédiate</li>
+                        <li>Tableau de bord famille</li>
+                        <li>Historique complet des interactions</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">Moments de Partage</h3>
+                    <p class="feature-desc">
+                        Discussions enrichissantes, partage de souvenirs et petits jeux 
+                        pour maintenir la vivacité d'esprit et égayer le quotidien.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li>Évocation de souvenirs heureux</li>
+                        <li>Petits jeux de mots simples</li>
+                        <li>Discussions sur l'actualité</li>
+                        <li>Échanges sur les centres d'intérêt</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🚨</div>
+                    <h3 class="feature-title">Veille Bienveillante</h3>
+                    <p class="feature-desc">
+                        Écoute attentive pour détecter si votre proche ne va pas bien 
+                        et vous alerter rapidement en cas de préoccupation.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li>Détection des changements d'humeur</li>
+                        <li>Repérage des signes de tristesse</li>
+                        <li>Alerte immédiate de la famille</li>
+                        <li>Vérification de bien-être quotidien</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Simplicité d'Usage</h3>
+                    <p class="feature-desc">
+                        Interface senior-friendly, pas besoin de smartphone compliqué. 
+                        Fonctionne avec n'importe quel téléphone fixe ou mobile.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li>Compatible téléphone fixe</li>
+                        <li>Pas d'application à installer</li>
+                        <li>Interface vocale intuitive</li>
+                        <li>Support technique dédié</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="temoignages" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Ce que disent les familles</h2>
+            <p class="section-subtitle">
+                Plus de 2,500 familles font déjà confiance à CompagnIA
+            </p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial animate-on-scroll">
+                    <p class="testimonial-content">
+                        "Depuis que maman utilise CompagnIA, je dors beaucoup mieux. Je reçois 
+                        un petit résumé chaque soir et je sais qu'elle va bien. Elle adore 
+                        ses conversations quotidiennes avec 'son amie robot' comme elle dit !"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h4>Marie Dubois</h4>
+                            <p>Fille de Suzanne, 78 ans • Lyon</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial animate-on-scroll">
+                    <p class="testimonial-content">
+                        "Mon père était très réticent au début, mais maintenant il attend 
+                        son appel quotidien ! CompagnIA lui pose des questions sur sa 
+                        journée et ils parlent de ses passions. Il se sent moins seul."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">P</div>
+                        <div class="author-info">
+                            <h4>Pierre Martin</h4>
+                            <p>Fils de Georges, 82 ans • Toulouse</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial animate-on-scroll">
+                    <p class="testimonial-content">
+                        "Ce service a vraiment changé le quotidien de ma mère. CompagnIA 
+                        a remarqué qu'elle semblait triste plusieurs jours et m'a alertée. 
+                        J'ai pu lui rendre visite et nous avons pu parler de ce qui la préoccupait."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h4>Anne Leroy</h4>
+                            <p>Fille de Monique, 75 ans • Bordeaux</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="tarifs" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Des tarifs transparents pour tous les budgets</h2>
+            <p class="section-subtitle">
+                Choisissez la formule qui correspond aux besoins de votre famille
+            </p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card animate-on-scroll">
+                    <h3 class="plan-name">Essentiel</h3>
+                    <div class="plan-price">
+                        <span class="currency">€</span>29<span class="period">/mois</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Appel quotidien (10 min)</li>
+                        <li>Rapport famille par email</li>
+                        <li>Conversations simples et bienveillantes</li>
+                        <li>Support par email</li>
+                        <li>1 contact famille</li>
+                    </ul>
+                    <button class="plan-cta secondary">Choisir Essentiel</button>
+                </div>
+
+                <div class="pricing-card featured animate-on-scroll">
+                    <h3 class="plan-name">Confort</h3>
+                    <div class="plan-price">
+                        <span class="currency">€</span>49<span class="period">/mois</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Appel quotidien (20 min)</li>
+                        <li>Conversations enrichissantes</li>
+                        <li>Alertes bien-être 24h/24</li>
+                        <li>Partage de souvenirs et jeux</li>
+                        <li>3 contacts famille</li>
+                        <li>Support téléphonique</li>
+                        <li>Tableau de bord famille</li>
+                    </ul>
+                    <button class="plan-cta primary">Choisir Confort</button>
+                </div>
+
+                <div class="pricing-card animate-on-scroll">
+                    <h3 class="plan-name">Premium</h3>
+                    <div class="plan-price">
+                        <span class="currency">€</span>79<span class="period">/mois</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Appels illimités</li>
+                        <li>IA hautement personnalisée</li>
+                        <li>Conversations sur tous sujets</li>
+                        <li>Accompagnement émotionnel</li>
+                        <li>Contacts famille illimités</li>
+                        <li>Support prioritaire 24h/24</li>
+                        <li>Rapports bien-être détaillés</li>
+                    </ul>
+                    <button class="plan-cta secondary">Choisir Premium</button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px; color: var(--text-gray);">
+                <p>✓ Essai gratuit 14 jours sur toutes les formules</p>
+                <p>✓ Annulation possible à tout moment</p>
+                <p>✓ Support technique inclus</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Questions fréquentes</h2>
+            <p class="section-subtitle">
+                Tout ce que vous devez savoir sur CompagnIA
+            </p>
+
+            <div class="faq-list">
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question">
+                        Comment CompagnIA peut-elle aider mon proche senior ?
+                    </button>
+                    <div class="faq-answer">
+                        CompagnIA offre une présence quotidienne bienveillante qui égaye le quotidien de votre proche. 
+                        Notre IA converse naturellement, s'intéresse à sa journée, partage des moments agréables, 
+                        stimule par la conversation et alerte la famille si elle détecte de la tristesse ou de l'inquiétude.
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question">
+                        Mon parent est-il trop âgé pour utiliser ce service ?
+                    </button>
+                    <div class="faq-answer">
+                        Absolument pas ! CompagnIA est conçue pour être utilisée avec n'importe quel téléphone, 
+                        fixe ou mobile. Aucune compétence technique n'est requise. L'IA s'adapte au rythme et 
+                        aux capacités de chaque utilisateur, rendant l'expérience naturelle et agréable.
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question">
+                        Comment CompagnIA détecte-t-elle si mon proche ne va pas bien ?
+                    </button>
+                    <div class="faq-answer">
+                        Notre IA analyse le ton de la voix, les réponses et l'humeur générale de votre proche. 
+                        Elle peut détecter des signes de tristesse, d'inquiétude ou si quelque chose semble différent 
+                        par rapport aux habitudes. En cas de préoccupation, vous êtes immédiatement informé par SMS ou email.
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question">
+                        Que se passe-t-il si mon proche ne répond pas à l'appel ?
+                    </button>
+                    <div class="faq-answer">
+                        CompagnIA tente plusieurs fois de joindre votre proche selon un protocole personnalisé. 
+                        Si aucune réponse après plusieurs tentatives, vous êtes immédiatement alerté. 
+                        Le système peut également contacter un voisin ou un proche local si configuré.
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question">
+                        Les données de mon proche sont-elles sécurisées ?
+                    </button>
+                    <div class="faq-answer">
+                        La sécurité et la confidentialité sont nos priorités absolues. Toutes les données sont 
+                        chiffrées, stockées en France, et nous respectons strictement le RGPD. Aucune information 
+                        n'est partagée avec des tiers sans votre consentement explicite.
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question">
+                        Puis-je essayer le service avant de m'engager ?
+                    </button>
+                    <div class="faq-answer">
+                        Bien sûr ! Nous offrons un essai gratuit de 14 jours sur toutes nos formules. 
+                        Vous pouvez annuler à tout moment sans frais. Notre équipe vous accompagne 
+                        pendant la période d'essai pour optimiser l'expérience.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="essai" class="final-cta">
+        <div class="container">
+            <h2>Offrez la tranquillité d'esprit à votre famille</h2>
+            <p>
+                Rejoignez les milliers de familles qui font confiance à CompagnIA 
+                pour veiller sur leurs proches seniors.
+            </p>
+            <a href="#" class="btn-primary" onclick="startTrial()">
+                Commencer l'essai gratuit maintenant
+            </a>
+            <div style="margin-top: 20px; opacity: 0.9;">
+                ✓ Configuration en 5 minutes • ✓ Aucun engagement • ✓ Support inclus
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CompagnIA</h4>
+                    <ul>
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Notre mission</a></li>
+                        <li><a href="#">Équipe</a></li>
+                        <li><a href="#">Carrières</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Produit</h4>
+                    <ul>
+                        <li><a href="#">Fonctionnalités</a></li>
+                        <li><a href="#">Tarifs</a></li>
+                        <li><a href="#">Sécurité</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Centre d'aide</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Formation</a></li>
+                        <li><a href="#">Communauté</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Légal</h4>
+                    <ul>
+                        <li><a href="#">Mentions légales</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">CGU</a></li>
+                        <li><a href="#">RGPD</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CompagnIA. Tous droits réservés. • Conçu avec ❤️ pour nos seniors</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const answer = faqItem.querySelector('.faq-answer');
+                const isActive = button.classList.contains('active');
+
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-question').forEach(otherButton => {
+                    otherButton.classList.remove('active');
+                    otherButton.parentElement.querySelector('.faq-answer').classList.remove('active');
+                });
+
+                // Toggle current item
+                if (!isActive) {
+                    button.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // CTA Functions
+        function startTrial() {
+            // Analytics tracking
+            console.log('Trial started');
+            
+            // Simulate trial start
+            alert('🎉 Merci ! Notre équipe va vous contacter dans les 24h pour configurer CompagnIA pour votre proche.\n\n📞 En attendant, vous pouvez nous appeler au 01 23 45 67 89 pour toute question.');
+            
+            // In real implementation, this would redirect to signup
+            // window.location.href = '/signup';
+        }
+
+        // Pricing buttons
+        document.querySelectorAll('.plan-cta').forEach(button => {
+            button.addEventListener('click', function() {
+                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
+                console.log(`Plan selected: ${planName}`);
+                
+                // Visual feedback
+                this.style.background = 'var(--secondary-color)';
+                this.textContent = '✓ Sélectionné !';
+                
+                setTimeout(() => {
+                    startTrial();
+                }, 500);
+            });
+        });
+
+        // Stats counter animation
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat .number');
+            stats.forEach(stat => {
+                const target = parseInt(stat.textContent.replace(/[^0-9]/g, ''));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = stat.textContent.replace(/[0-9]+/, target);
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = stat.textContent.replace(/[0-9]+/, Math.floor(current));
+                    }
+                }, 16);
+            });
+        }
+
+        // Trigger stats animation when hero is visible
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(animateStats, 500);
+                    heroObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        heroObserver.observe(document.querySelector('.hero'));
+
+        // Mobile menu toggle (if needed)
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Add floating animation to solution visual
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.querySelector('.solution-visual').classList.add('floating');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
