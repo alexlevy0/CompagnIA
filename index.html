@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CompagnIA - Votre Compagnon IA Personnel pour Seniors</title>
-    <meta name="description" content="Un service IA bienveillant qui appelle quotidiennement vos proches seniors, gère leurs rendez-vous et vous tient informé de leur bien-être.">
+    <meta name="description" content="Un service IA bienveillant qui appelle quotidiennement vos proches seniors pour prendre de leurs nouvelles et vous tient informé de leur bien-être.">
     <style>
         * {
             margin: 0;
@@ -87,6 +87,8 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
+            cursor: pointer;
+            border: none;
         }
 
         .cta-header:hover {
@@ -199,11 +201,154 @@
             transition: all 0.3s;
             border: 2px solid var(--primary-color);
             margin-left: 20px;
+            cursor: pointer;
         }
 
         .btn-secondary:hover {
             background: var(--primary-color);
             color: white;
+        }
+
+        /* Modal pour collecte d'emails */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-gray);
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .modal p {
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group.required label::after {
+            content: " *";
+            color: #dc2626;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #a0a0a0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .form-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
 
         /* Problem Section */
@@ -824,6 +969,12 @@
             .pricing-card.featured {
                 transform: none;
             }
+
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+                padding: 30px;
+            }
         }
 
         /* Animations */
@@ -874,9 +1025,46 @@
                 <li><a href="#tarifs">Tarifs</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
-            <a href="#essai" class="cta-header">Essai gratuit</a>
+            <button class="cta-header" onclick="openModal()">Essai gratuit</button>
         </nav>
     </header>
+
+    <!-- Modal de collecte d'emails -->
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>🔔 Être alerté au lancement</h2>
+            <p>CompagnIA sera bientôt disponible ! Laissez-nous vos coordonnées pour être parmi les premiers informés.</p>
+            
+            <form id="emailForm">
+                <div class="form-group required">
+                    <label for="email">Votre email</label>
+                    <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Votre nom</label>
+                    <input type="text" id="name" name="name" placeholder="Prénom Nom">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Téléphone (optionnel)</label>
+                    <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78">
+                </div>
+                
+                <div class="form-group">
+                    <label for="situation">Votre situation</label>
+                    <textarea id="situation" name="situation" rows="3" placeholder="Parlez-nous de votre situation avec votre proche senior..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    📧 M'alerter au lancement
+                </button>
+            </form>
+            
+            <div id="formMessage" class="form-message" style="display: none;"></div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -904,8 +1092,8 @@
                 </div>
 
                 <div class="hero-cta">
-                    <a href="#essai" class="btn-primary">Commencer l'essai gratuit</a>
-                    <a href="#demo" class="btn-secondary">Voir la démo</a>
+                    <button class="btn-primary" onclick="openModal()">Commencer l'essai gratuit</button>
+                    <button class="btn-secondary" onclick="openModal()">Voir la démo</button>
                 </div>
             </div>
         </div>
@@ -970,7 +1158,7 @@
                         <li>Interface simple, aucune technologie complexe</li>
                     </ul>
 
-                    <a href="#fonctionnalites" class="btn-primary">Découvrir les fonctionnalités</a>
+                    <button class="btn-primary" onclick="openModal()">Découvrir les fonctionnalités</button>
                 </div>
 
                 <div class="solution-visual animate-on-scroll floating">
@@ -1178,7 +1366,7 @@
                         <li>Support par email</li>
                         <li>1 contact famille</li>
                     </ul>
-                    <button class="plan-cta secondary">Choisir Essentiel</button>
+                    <button class="plan-cta secondary" onclick="openModal()">Choisir Essentiel</button>
                 </div>
 
                 <div class="pricing-card featured animate-on-scroll">
@@ -1195,7 +1383,7 @@
                         <li>Support téléphonique</li>
                         <li>Tableau de bord famille</li>
                     </ul>
-                    <button class="plan-cta primary">Choisir Confort</button>
+                    <button class="plan-cta primary" onclick="openModal()">Choisir Confort</button>
                 </div>
 
                 <div class="pricing-card animate-on-scroll">
@@ -1212,7 +1400,7 @@
                         <li>Support prioritaire 24h/24</li>
                         <li>Rapports bien-être détaillés</li>
                     </ul>
-                    <button class="plan-cta secondary">Choisir Premium</button>
+                    <button class="plan-cta secondary" onclick="openModal()">Choisir Premium</button>
                 </div>
             </div>
             
@@ -1310,9 +1498,9 @@
                 Rejoignez les milliers de familles qui font confiance à CompagnIA 
                 pour veiller sur leurs proches seniors.
             </p>
-            <a href="#" class="btn-primary" onclick="startTrial()">
+            <button class="btn-primary" onclick="openModal()">
                 Commencer l'essai gratuit maintenant
-            </a>
+            </button>
             <div style="margin-top: 20px; opacity: 0.9;">
                 ✓ Configuration en 5 minutes • ✓ Aucun engagement • ✓ Support inclus
             </div>
@@ -1367,6 +1555,95 @@
     </footer>
 
     <script>
+        // 🔗 REMPLACER CETTE URL PAR VOTRE URL GOOGLE APPS SCRIPT
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzp-qw5XjGxxz_Nu14mA5FD0konmBaFAz_kohTEBNmx64bUfeA4etgoMewrPZeR6xoPyQ/exec';
+
+        // Gestion du modal
+        function openModal() {
+            document.getElementById('emailModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('emailModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fermer le modal en cliquant à l'extérieur
+        window.onclick = function(event) {
+            const modal = document.getElementById('emailModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Gestion du formulaire
+        document.getElementById('emailForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const formMessage = document.getElementById('formMessage');
+            
+            // Désactiver le bouton
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Envoi en cours...';
+            
+            // Récupérer les données du formulaire
+            const formData = new FormData(this);
+            const data = {
+                email: formData.get('email'),
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                situation: formData.get('situation'),
+                timestamp: new Date().toISOString(),
+                source: 'Landing Page CompagnIA'
+            };
+            
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Comme mode: 'no-cors', on ne peut pas vérifier la réponse
+                // On assume que ça a marché
+                showMessage('success', '🎉 Merci ! Vous serez alerté dès que CompagnIA sera disponible.');
+                
+                // Réinitialiser le formulaire
+                this.reset();
+                
+                // Fermer le modal après 2 secondes
+                setTimeout(() => {
+                    closeModal();
+                    hideMessage();
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                showMessage('error', '❌ Erreur lors de l\'envoi. Veuillez réessayer.');
+            } finally {
+                // Réactiver le bouton
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📧 M\'alerter au lancement';
+            }
+        });
+
+        function showMessage(type, message) {
+            const messageDiv = document.getElementById('formMessage');
+            messageDiv.className = `form-message ${type}`;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+        }
+
+        function hideMessage() {
+            const messageDiv = document.getElementById('formMessage');
+            messageDiv.style.display = 'none';
+        }
+
         // Animation on scroll
         const observerOptions = {
             threshold: 0.1,
@@ -1420,34 +1697,6 @@
             });
         });
 
-        // CTA Functions
-        function startTrial() {
-            // Analytics tracking
-            console.log('Trial started');
-            
-            // Simulate trial start
-            alert('🎉 Merci ! Notre équipe va vous contacter dans les 24h pour configurer CompagnIA pour votre proche.\n\n📞 En attendant, vous pouvez nous appeler au 01 23 45 67 89 pour toute question.');
-            
-            // In real implementation, this would redirect to signup
-            // window.location.href = '/signup';
-        }
-
-        // Pricing buttons
-        document.querySelectorAll('.plan-cta').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                console.log(`Plan selected: ${planName}`);
-                
-                // Visual feedback
-                this.style.background = 'var(--secondary-color)';
-                this.textContent = '✓ Sélectionné !';
-                
-                setTimeout(() => {
-                    startTrial();
-                }, 500);
-            });
-        });
-
         // Stats counter animation
         function animateStats() {
             const stats = document.querySelectorAll('.stat .number');
@@ -1481,16 +1730,13 @@
 
         heroObserver.observe(document.querySelector('.hero'));
 
-        // Mobile menu toggle (if needed)
-        function toggleMobileMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        }
-
         // Add floating animation to solution visual
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                document.querySelector('.solution-visual').classList.add('floating');
+                const solutionVisual = document.querySelector('.solution-visual');
+                if (solutionVisual) {
+                    solutionVisual.classList.add('floating');
+                }
             }, 1000);
         });
     </script>
