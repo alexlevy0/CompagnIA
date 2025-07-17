@@ -2063,7 +2063,7 @@
     <script>
         // 🔗 CONFIGURATION - REMPLACEZ CES URLs PAR VOS URLs GOOGLE APPS SCRIPT
         const LEADS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzp-qw5XjGxxz_Nu14mA5FD0konmBaFAz_kohTEBNmx64bUfeA4etgoMewrPZeR6xoPyQ/exec';
-        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyHVd1qipyXmNDV39YeqtpeTQ07tsXGVmhfE3VQPdfGgBjlY9KX0m0xtg71MSTGOFyk/exec'; // À créer selon les instructions
+        const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH5U72QLrbjp5cLbt-t2_ipW8UgIs5YTtnxlbS9DYsfm5xjJUKF6eyJ06PY9cqbv3B/exec'; // À créer selon les instructions
 
         // Variables globales
         let currentUser = null;
@@ -2581,6 +2581,34 @@
                 }
             }, 1000);
         });
+
+        function debugContactForm() {
+            console.log("AUTH_SCRIPT_URL:", AUTH_SCRIPT_URL);
+            console.log("currentUser:", currentUser);
+            
+            // Tester avec des données factices
+            const testData = {
+                action: 'add_contact',
+                userId: 'debug_user',
+                contactName: 'Test Debug',
+                contactPhone: '01 11 11 11 11',
+                relation: 'Test',
+                preferredTime: '10:00',
+                notes: 'Debug test',
+                timestamp: new Date().toISOString()
+            };
+            
+            fetch(AUTH_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(testData)
+            }).then(() => {
+                console.log("Requête envoyée");
+            }).catch(err => {
+                console.error("Erreur:", err);
+            });
+        }
     </script>
 </body>
 </html>
