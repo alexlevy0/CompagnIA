@@ -1,0 +1,121 @@
+{
+  "apiRoutes": [],
+  "htmlRoutes": [
+    {
+      "file": "./(index,info)/index.tsx",
+      "page": "/(info)/index",
+      "namedRegex": "^(?:/\\(info\\))?(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/index.tsx",
+      "page": "/(index)/index",
+      "namedRegex": "^(?:/\\(index\\))?(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/two.tsx",
+      "page": "/(info)/two",
+      "namedRegex": "^(?:/\\(info\\))?/two(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/two.tsx",
+      "page": "/(index)/two",
+      "namedRegex": "^(?:/\\(index\\))?/two(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/info.tsx",
+      "page": "/(info)/info",
+      "namedRegex": "^(?:/\\(info\\))?/info(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/icon.tsx",
+      "page": "/(info)/icon",
+      "namedRegex": "^(?:/\\(info\\))?/icon(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/info.tsx",
+      "page": "/(index)/info",
+      "namedRegex": "^(?:/\\(index\\))?/info(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/icon.tsx",
+      "page": "/(index)/icon",
+      "namedRegex": "^(?:/\\(index\\))?/icon(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/_debug.tsx",
+      "page": "/(info)/_debug",
+      "namedRegex": "^(?:/\\(info\\))?/_debug(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/_debug.tsx",
+      "page": "/(index)/_debug",
+      "namedRegex": "^(?:/\\(index\\))?/_debug(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/privacy.tsx",
+      "page": "/(info)/privacy",
+      "namedRegex": "^(?:/\\(info\\))?/privacy(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/account.tsx",
+      "page": "/(info)/account",
+      "namedRegex": "^(?:/\\(info\\))?/account(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/privacy.tsx",
+      "page": "/(index)/privacy",
+      "namedRegex": "^(?:/\\(index\\))?/privacy(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/account.tsx",
+      "page": "/(index)/account",
+      "namedRegex": "^(?:/\\(index\\))?/account(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/settings.tsx",
+      "page": "/(info)/settings",
+      "namedRegex": "^(?:/\\(info\\))?/settings(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(index,info)/settings.tsx",
+      "page": "/(index)/settings",
+      "namedRegex": "^(?:/\\(index\\))?/settings(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "expo-router/build/views/Sitemap.js",
+      "page": "/_sitemap",
+      "namedRegex": "^/_sitemap(?:/)?$",
+      "routeKeys": {},
+      "generated": true
+    }
+  ],
+  "notFoundRoutes": [
+    {
+      "file": "expo-router/build/views/Unmatched.js",
+      "page": "/+not-found",
+      "namedRegex": "^(?:/(?<notfound>.+?))?(?:/)?$",
+      "routeKeys": {
+        "notfound": "not-found"
+      },
+      "generated": true
+    }
+  ],
+  "redirects": [],
+  "rewrites": []
+}
