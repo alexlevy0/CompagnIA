@@ -702,6 +702,88 @@ body {
     box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
 }
 
+/* Section d'essai téléphonique */
+.hero-phone-trial {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.phone-input-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.phone-input {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    padding: 18px 25px;
+    font-size: 16px;
+    color: white;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 250px;
+    text-align: center;
+}
+
+.phone-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.phone-input:focus {
+    border-color: rgba(74, 172, 254, 0.8);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(74, 172, 254, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-trial {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    padding: 18px 30px;
+    border-radius: 50px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-trial::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+}
+
+.btn-trial:hover::before {
+    left: 100%;
+}
+
+.btn-trial:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(76, 175, 80, 0.4);
+}
+
+.trial-note {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-style: italic;
+}
+
 /* Modal avec glassmorphism avancé */
 .modal {
     display: none;
@@ -1954,6 +2036,22 @@ body {
     .hero-cta {
         flex-direction: column;
         align-items: center;
+    }
+
+    .phone-input-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .phone-input {
+        min-width: 280px;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .btn-trial {
+        width: 100%;
+        max-width: 320px;
     }
 
     .btn-secondary {
