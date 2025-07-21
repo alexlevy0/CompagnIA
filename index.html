@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABUFJREFUWEftVltsVFUUXfvceXRa+pjSUkrptBQxBapEYkgFKwpCrEQ0JjVCQGIkwQQV9Vc+DIlGE/WD6IeKMcQfQzE+qNooBEMBhUBBBMKjtNBS2pJO2+nQ58w92+xz7zS1zJAaE/CDM5l755xzZ++119pn70u4w4PusH/cBfD/ZoCZ6bPjeys6Y0OP26AiZbMPIAIIDAZpAmyZyyCWK2uzGyNlXZnm8+97efGjZ4icvWQjJQMfN+4ruTZyY/toPL6KiCwxYcywXBQgNy1TAuQr6cQCSjYIciNQPGB5f8rzpb/+6tKlLZMG8EHj3nmdg/31TChWEpExJs6dCMUxSDn25DeTC855xgAyoGTK8EJ1FGSmV79WtezPiSBuYmDX6dNTjvdd+MMGzycoKAnFGHQMsxuhzEnm7t1Eb4hWBpQD2JFKZh5lnS/PDS5aV1nZPx7ETQC2/b7nzWh89EMSAkVjBnQiQonWdgw6H2EgAU6BEmwYp65aCfWJkOH1vrX1yZXvpgTAzGprw3eNMdCChN6GchCUDZRm5KB0ShYsWGi7EUVTb6+JcnZ2DkJZmeZ3aySKlp7+BIQxBmTP61Hn3n5qZQUR2QkQ/2Cg7tSp4IHupnZSFDC55lIvTDxWEMK83LxE3Ob/TT09sJlx79RcZ12sMXChuw+/NV01c20MOZyBMLpwemHxs0sWXE8KYOexhtCZSLiZFCxznER+EEKBLKwuuQeUOHFuQo7xPH7dtbz3fBsuh/uhDZXOKWGCXRrMmL1x+ZIrKQGc7etpBpHFBrmj8yP5M3Hf1PzUAJjRFIniUiSCysJpyPb5caErgoMXO1wJXHeK7MLctLJNK6pakwLYdawh1Njb2wywNUYcA8umh1Au9E9MWWZzKtr6B1Hf0gqtNCrycvHwjEI0d0XRcK4DTiCOmqJ9KNNXtmF1CgAiwbmwMADDgBQZ+dwfzEdVUfGYxoYWLfuMtr4B/NrSjhjZYAUUZ2Vg1awQTlwM42xbrylIznExtcIuKsos27DiweQMHK4/k/vzSHN7PE2nCXDRXxIwXXmxdu5c+C3LZY6hbY2/rvXi2NUw4pZ2OLOAosx0PBGaibqDrRgetaHHiUCs4nNDWSVPr1x4LakE+/ez5+yJfefb5wyVsfgadwrm5ASxvFRYYHT3DePopW50DQzB9jDY0sa5toDyqVkIdHtwueOGU50TAMjk09XqxXmzKyoqRpMCkMWv3jnw0YCOv9FbNIKBbBvsccqsinkxz5ONYRA6IgOwpQ+Jc4+G7UYvLBRFAxgOa0CxW43d3kBAmt/a/spLVVtuWQm/2XGoJNpin2DNQU0aWknyKOeIEyHm1+jPZ8T8gPZoaIuhPQylFTK7FPxDBO0hp1+5RdJ12FcwzffAmjUPXb4lANn8+r1Dz49E7J0a8EkkJouNQbfBEGM4nTEacLoUxQmBQUEqcgBayaLTBZwqRCMZ2bT+xY1VteOdO6mZYux+//AzQ1H7E9vmGcYxsWHD0dVp/27DM8BImUIDLYBNM3TriIfapmR6N67bVPlLMle3fCOq33E4t+86XoiPcjUzl7EiL5NpezIMKlaJeqlsrbnAZs4ybJlKQsjI9tas21y5O1Wgk34lk0ZVW1trnq+pqUn6hvP9p0fKe67H92hGmTAhQNJz/NXrNy+q/88AUhmYuP7D50dmhTtje2zN8yUfMoL+6rW3E4AA+vHLo9O7O2PfxmO6MpDtr1675TYykGCkru5UMHyy/4tA0Lftuc2LTt42CSY4ct8QUgs46SScbA782+fuArjjDPwNsI1jPwvhijIAAAAASUVORK5CYII=" sizes="32x32">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="DarkVeil.css">
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
@@ -77,7 +78,6 @@
             </div> -->
             
             <!-- Particules scintillantes -->
-            <div class="hero-particles" id="hero-particles"></div>
             
             <div class="container">
                 <div class="hero-content">
@@ -820,5 +820,39 @@
     </div>
 
     <script src="script.js"></script>
+    <script type="module">
+        // Charger OGL depuis CDN
+        import { Renderer, Program, Mesh, Triangle, Vec2 } from 'https://cdn.skypack.dev/ogl';
+        
+        // Rendre les classes disponibles globalement
+        window.Renderer = Renderer;
+        window.Program = Program;
+        window.Mesh = Mesh;
+        window.Triangle = Triangle;
+        window.Vec2 = Vec2;
+        
+        // Attendre que le DOM soit chargé
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser DarkVeil dans la section hero
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                const darkVeil = new window.DarkVeil({
+                    hueShift: 180,
+                    noiseIntensity: 0.02,
+                    scanlineIntensity: 0.1,
+                    speed: 0.3,
+                    scanlineFrequency: 0.5,
+                    warpAmount: 0.1,
+                    resolutionScale: 1
+                });
+                
+                darkVeil.init(heroSection);
+                
+                // Stocker l'instance pour pouvoir la contrôler plus tard
+                window.darkVeilInstance = darkVeil;
+            }
+        });
+    </script>
+    <script src="DarkVeil.js"></script>
 </body>
 </html>
